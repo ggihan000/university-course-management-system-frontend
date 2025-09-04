@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import './AdminPage.css';
-
+import { useNavigate } from 'react-router-dom';
 
 const AddStudent = () => {
+  const navigate = useNavigate();
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const [formData, setFormData] = useState({
       name: '',
@@ -53,6 +54,9 @@ const AddStudent = () => {
       console.log(data);
 
       if (!response.ok) {
+        if(response.status===401){
+          navigate("/login")
+        }
         throw new Error(data.message || 'Failed');
       }
 

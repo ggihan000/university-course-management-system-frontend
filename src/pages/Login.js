@@ -93,7 +93,7 @@ const Login = () => {
     } catch (error) {
       setApiResponse({ 
         success: false, 
-        message: 'An error occurred during login'
+        message: error.message
       });
     } finally {
       setIsSubmitting(false);
