@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './AuthPages.css';
 import { useNavigate } from 'react-router-dom';
-import Admin from './AdminPage';
 
 const Login = () => {
   // State for form data
@@ -16,7 +15,6 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [apiResponse, setApiResponse] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const changePassword = (e) => {
     e.preventDefault();
@@ -84,7 +82,7 @@ const Login = () => {
       setApiResponse({ success: true, message: 'Login successful! Redirecting...' });
 
       if(data.role){
-        if(data.role=="ADMIN"){
+        if(data.role==="ADMIN"){
           navigate('/admin');
         }else{
           navigate('/student');
@@ -159,7 +157,7 @@ const Login = () => {
         </form>
 
         <div className="auth-header">
-          <a href='#' onClick={changePassword}>Change Password</a>
+          <p className='change-password' onClick={changePassword}>Change Password</p>
         </div>
       </div>
     </div>

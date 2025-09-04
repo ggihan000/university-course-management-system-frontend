@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './AuthPages.css';
 import { useNavigate } from 'react-router-dom';
 
 const CourseList = ({ data,type }) => {
   const navigate = useNavigate();
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const [apiPoint,setApiPoint] = useState(type==="tab1"?"unenroll":"enroll")
+  const [apiPoint] = useState(type==="tab1"?"unenroll":"enroll")
   const handleSelect = async (item) => {
     console.log("Selected item:", item);
     try { 
@@ -82,8 +82,6 @@ const Student = () => {
   const [unData,setUnData] = useState([]);
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
- useEffect(() => {
-
      async function fetchData() {
       try { 
         const token = "Bearer "+ localStorage.getItem("authToken");
@@ -112,7 +110,6 @@ const Student = () => {
     }
     fetchData();
 
-  } , []);
 
 
   const [activeTab, setActiveTab] = useState("tab1");
