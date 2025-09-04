@@ -13,7 +13,7 @@ body {
 }
 
 .content-container {
-  padding-top: 70px; /* Height of navbar */
+  padding-top: 20px; /* Height of navbar */
   flex: 1;
   width: 100vw;
   max-width: 100%;

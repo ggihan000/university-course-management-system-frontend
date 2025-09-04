@@ -105,7 +105,7 @@ const Login = () => {
       <div className="auth-card">
         <div className="auth-header">
           <h2>Welcome Back</h2>
-          <p>Sign in to continue to your account</p>
+          <p>Use Email:admin@kln.ac.lk Password:admin123</p>
         </div>
         
         {apiResponse && (
