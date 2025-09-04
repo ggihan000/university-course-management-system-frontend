@@ -16,7 +16,7 @@ const ChangePassword = () => {
   const [errors, setErrors] = useState({});
   const [apiResponse, setApiResponse] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
