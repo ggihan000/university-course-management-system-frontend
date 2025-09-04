@@ -27,6 +27,9 @@ const CourseList = ({ data,type }) => {
       
 
       if (!response.ok) {
+        if(response.status===401){
+          navigate("/login")
+        }
         throw new Error(data.message || 'Failed');
       }
 
