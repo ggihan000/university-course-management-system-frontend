@@ -18,6 +18,12 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const changePassword = (e) => {
+    e.preventDefault();
+    console.log("changepass")
+    navigate("/change_password")
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -152,6 +158,9 @@ const Login = () => {
           </button>
         </form>
 
+        <div className="auth-header">
+          <a href='#' onClick={changePassword}>Change Password</a>
+        </div>
       </div>
     </div>
   );

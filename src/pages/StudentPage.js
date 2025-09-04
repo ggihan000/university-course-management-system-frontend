@@ -1,18 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AuthPages.css';
 import { useNavigate } from 'react-router-dom';
 
 const CourseList = ({ data,type }) => {
-  const handleSelect = (item) => {
+  const navigate = useNavigate();
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const [apiPoint,setApiPoint] = useState(type==="tab1"?"unenroll":"enroll")
+  const handleSelect = async (item) => {
     console.log("Selected item:", item);
-    // your function logic here
+    try { 
+      const token = "Bearer "+ localStorage.getItem("authToken");
+     
+      
+      const response = await fetch(API_BASE_URL + '/api/v1/student/'+apiPoint, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: JSON.stringify({
+          course_id: item.courseCode,
+        })
+      });
+
+      const data = await response.json();
+      
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed');
+      }
+
+      navigate(0); 
+      
+    } catch (error) {
+     
+    } finally {
+      
+    }
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "15px", padding:"20px"}}>
       {data.map((item) => (
         <div 
-          key={item.id} 
+          key={item.courseCode} 
           style={{
             border: "1px solid #ccc",
             borderRadius: "8px",
@@ -20,10 +51,10 @@ const CourseList = ({ data,type }) => {
             boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
           }}
         >
-          <h3>{item.id}-{item.title}</h3>
-          <p>{item.description}</p>
-          {item.result? 
-          <div className='result-box'>Result : {item.result}</div>
+          <h3>{item.courseCode}-{item.courseName}</h3>
+          <p>{item.courseDescription}</p>
+          {item.grade? 
+          <div className='result-box'>Result : {item.grade}</div>
             :
           <div>
           {type === "tab2" ? <button 
@@ -47,15 +78,44 @@ const CourseList = ({ data,type }) => {
 };
 
 const Student = () => {
-  const data = [
-  { id: 1, title: "Item 1", description: "This is the first item.", result: "A+" },
-  { id: 2, title: "Item 2", description: "This is the second item." },
-  { id: 3, title: "Item 3", description: "This is the third item." },
-  { id: 1, title: "Item 1", description: "This is the first item." },
-  { id: 2, title: "Item 2", description: "This is the second item." },
-  { id: 3, title: "Item 3", description: "This is the third item." }
-]
-    const [activeTab, setActiveTab] = useState("tab1");
+  const [enData,setEnData] = useState([]);
+  const [unData,setUnData] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+ useEffect(() => {
+
+     async function fetchData() {
+      try { 
+        const token = "Bearer "+ localStorage.getItem("authToken");
+        const response = await fetch(API_BASE_URL + '/api/v1/student/get_course_details', {
+          method: 'GET',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed');
+        }
+
+        setEnData(data.message.enrolledCourses)
+        setUnData(data.message.unEnrolledCourses)
+        console.log(unData)
+
+      }catch{
+
+      }
+    
+    }
+    fetchData();
+
+  } , []);
+
+
+  const [activeTab, setActiveTab] = useState("tab1");
     
       return (
         <div className="admin-container">
@@ -77,8 +137,8 @@ const Student = () => {
     
           {/* Tab Content */}
           <div className="tab-content">
-            {activeTab === "tab1" && <div><CourseList data={data} type={activeTab}/></div>}
-            {activeTab === "tab2" && <div><CourseList data={data} type={activeTab}/></div>}
+            {activeTab === "tab1" && <div><CourseList data={enData} type={activeTab}/></div>}
+            {activeTab === "tab2" && <div><CourseList data={unData} type={activeTab}/></div>}
           </div>
         </div>
       );

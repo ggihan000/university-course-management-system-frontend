@@ -42,42 +42,12 @@ const Navbar = () => {
         {/* Navigation links */}
         <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <ul>
-            {/*<li>
-              <Link 
-                to="/home" 
-                className={location.pathname === '/' ? 'active' : ''}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-            </li>*/}
-            
             {isLoggedIn ? (
-              <>
-                <li>
-                  <Link 
-                    to="/courses" 
-                    className={location.pathname === '/chat' ? 'active' : ''}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Courses
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    to="/results" 
-                    className={location.pathname === '/chat' ? 'active' : ''}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Results
-                  </Link>
-                </li>
                 <li>
                   <button onClick={handleLogout} className="logout-btn">
                     Logout
                   </button>
                 </li>
-              </>
             ) : (
               <>
                 <li>

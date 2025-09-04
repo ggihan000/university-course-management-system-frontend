@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Register from './pages/Register';
-import Results from './pages/Results';
-import Courses from './pages/Courses';
+import ChangePassword from './pages/ChangePassword';
 import ProtectedRoute from './ProtectedRoute';
 import NavBar from './pages/components/NavBar';
 import Admin from './pages/AdminPage';
@@ -27,6 +25,12 @@ function App() {
         <Route path="/login" element={
           <Layout>
             <Login />
+          </Layout>
+        } />
+
+        <Route path="/change_password" element={
+          <Layout>
+            <ChangePassword />
           </Layout>
         } />
 
